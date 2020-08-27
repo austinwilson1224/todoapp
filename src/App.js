@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import ListItems from './ListItems';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faBoxTissue } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faTrash);
 
 class App extends React.Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class App extends React.Component {
     }
     this.handleInput = this.handleInput.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   handleInput(e) {
@@ -43,6 +46,13 @@ class App extends React.Component {
     }
   }
 
+  deleteItem(key) {
+    const filteredItems = this.state.items.filter(item => item.key !== key);
+    this.setState({
+      items: filteredItems
+    })
+  }
+
 
   render() {
     return(
@@ -55,7 +65,8 @@ class App extends React.Component {
             <button type="submit">Add</button>
           </form>
         </header>
-        <ListItems items = {this.state.items}></ListItems>
+        <ListItems items = {this.state.items}
+        deleteItem = {this.deleteItem}></ListItems>
       </div>
       
     )
